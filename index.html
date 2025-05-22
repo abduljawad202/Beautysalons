@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قائمة تحقق اشتراطات الصالونات النسائية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="img/logo.png" alt="شعار قائمة تحقق اشتراطات الصالونات النسائية" class="logo">
+            <h1>قائمة تحقق اشتراطات الصالونات النسائية</h1>
+        </header>
+        
+        <div class="salon-info">
+            <div class="info-row">
+                <div class="info-field">
+                    <label for="salon-name">اسم الصالون:</label>
+                    <input type="text" id="salon-name" placeholder="أدخل اسم الصالون">
+                </div>
+                <div class="info-field">
+                    <label for="license-number">رقم الرخصة التجارية:</label>
+                    <input type="text" id="license-number" placeholder="أدخل رقم الرخصة">
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-field">
+                    <label for="inspection-date">تاريخ التفتيش:</label>
+                    <input type="date" id="inspection-date">
+                </div>
+                <div class="info-field">
+                    <label for="inspector-name">اسم المفتش:</label>
+                    <input type="text" id="inspector-name" placeholder="أدخل اسم المفتش">
+                </div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="checklist">قائمة التحقق</button>
+            <button class="tab-btn" data-tab="results">النتائج</button>
+            <button class="tab-btn" data-tab="about">حول التطبيق</button>
+        </div>
+        
+        <div class="tab-content">
+            <div id="checklist" class="tab-pane active">
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                    <div class="progress-text">
+                        <span id="completed-items">0</span> من <span id="total-items">0</span> (<span id="completion-percentage">0%</span>)
+                    </div>
+                </div>
+                
+                <div id="checklist-container"></div>
+                
+                <div class="action-buttons">
+                    <button id="save-results" class="action-btn">
+                        <i class="fas fa-save"></i> حفظ النتائج
+                    </button>
+                    <button id="load-results" class="action-btn">
+                        <i class="fas fa-folder-open"></i> استعادة النتائج
+                    </button>
+                    <button id="reset-checklist" class="action-btn">
+                        <i class="fas fa-redo"></i> إعادة ضبط
+                    </button>
+                </div>
+            </div>
+            
+            <div id="results" class="tab-pane">
+                <div class="results-summary">
+                    <div class="result-item">
+                        <div class="result-value compliant" id="compliant-items">0</div>
+                        <div class="result-label">مطابق</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-value non-compliant" id="non-compliant-items">0</div>
+                        <div class="result-label">غير مطابق</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-value not-applicable" id="not-applicable-items">0</div>
+                        <div class="result-label">غير منطبق</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-value" id="total-items-result">0</div>
+                        <div class="result-label">إجمالي البنود</div>
+                    </div>
+                </div>
+                
+                <div class="final-result">
+                    <div class="final-percentage" id="final-percentage">0%</div>
+                    <div class="final-label">نسبة المطابقة</div>
+                </div>
+                
+                <div class="visit-recommendation">
+                    <div class="recommendation-label">توصية الزيارات:</div>
+                    <div class="recommendation-value" id="visit-frequency">-</div>
+                </div>
+                
+                <div class="category-results-container">
+                    <h2>نتائج الفئات</h2>
+                    <div id="category-results"></div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="export-pdf" class="action-btn">
+                        <i class="fas fa-file-pdf"></i> تصدير PDF
+                    </button>
+                    <button id="export-csv" class="action-btn">
+                        <i class="fas fa-file-csv"></i> تصدير CSV
+                    </button>
+                    <button id="print-results" class="action-btn">
+                        <i class="fas fa-print"></i> طباعة
+                    </button>
+                </div>
+            </div>
+            
+            <div id="about" class="tab-pane">
+                <div class="about-content">
+                    <h2>حول التطبيق</h2>
+                    <p>تطبيق قائمة تحقق اشتراطات الصالونات النسائية هو أداة تفتيش إلكترونية تساعد المفتشين على تقييم مدى التزام الصالونات النسائية بالاشتراطات والمعايير المطلوبة.</p>
+                    
+                    <h3>مميزات التطبيق:</h3>
+                    <ul>
+                        <li>قائمة تحقق شاملة لجميع اشتراطات الصالونات النسائية</li>
+                        <li>إمكانية تقييم كل بند (مطابق، غير مطابق، غير منطبق)</li>
+                        <li>إضافة ملاحظات لكل بند</li>
+                        <li>حساب نسبة المطابقة تلقائياً</li>
+                        <li>توصية بعدد الزيارات المطلوبة بناءً على نسبة المطابقة</li>
+                        <li>إمكانية حفظ النتائج واستعادتها لاحقاً</li>
+                        <li>تصدير النتائج بصيغة PDF أو CSV</li>
+                        <li>طباعة تقرير التفتيش</li>
+                    </ul>
+                    
+                    <div class="copyright">
+                        <p>© 2025 Abduljawad2025. جميع الحقوق محفوظة.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Checklist data
+        const checklistData = {
+            "visitFrequency": [
+                {
+                    "threshold": 70,
+                    "frequency": "زيارات مكثفة (يومية)"
+                },
+                {
+                    "threshold": 85,
+                    "frequency": "زيارة أسبوعية"
+                },
+                {
+                    "threshold": 100,
+                    "frequency": "زيارة شهرية"
+                }
+            ],
+            "categories": [
+                {
+                    "title": "الاشتراطات العامة لجميع الأنشطة",
+                    "subcategories": [
+                        {
+                            "title": "الموقع والمبنى",
+                            "items": [
+                                {
+                                    "id": "1.1.1",
+                                    "text": "المساحة كافية للأنشطة المرخصة مع منطقة كافية لانتظار الزبائن"
+                                },
+                                {
+                                    "id": "1.1.2",
+                                    "text": "اتباع المقاييس القطرية في تشييد المبنى ومساحته مناسبة لعدد الكراسي المستخدمة"
+                                },
+                                {
+                                    "id": "1.1.3",
+                                    "text": "المبنى قريب من شبكة الصرف الصحي مع التقيد بالمواصفات الفنية للتوصيلات المائية"
+                                },
+                                {
+                                    "id": "1.1.4",
+                                    "text": "الحوائط من مواد بنائية ملساء وسهلة التنظيف وخالية من التشققات والثقوب"
+                                },
+                                {
+                                    "id": "1.1.5",
+                                    "text": "السقوف مسلّحة طبقاً للمواصفات وملساء وسهلة التنظيف ومعزولة حرارياً"
+                                },
+                                {
+                                    "id": "1.1.6",
+                                    "text": "استخدام الإسمنت في الأرضية لتحمل ثقل المعدات والأجهزة"
+                                },
+                                {
+                                    "id": "1.1.7",
+                                    "text": "الأرضية من السيراميك ملساء غير قابلة للانزلاق وخالية من التشققات"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "النظافة والسلامة",
+                            "items": [
+                                {
+                                    "id": "1.2.1",
+                                    "text": "توفر أماكن خاصة لحفظ المنظفات والمواد الكيماوية"
+                                },
+                                {
+                                    "id": "1.2.2",
+                                    "text": "توفر علب مناسبة للنفايات والقمامة"
+                                },
+                                {
+                                    "id": "1.2.3",
+                                    "text": "توفر صندوق للإسعافات الأولية يحتوي على المواد الضرورية"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "الآداب العامة",
+                            "items": [
+                                {
+                                    "id": "1.3.1",
+                                    "text": "وضع علامة (صالون نسائي) على المحل ومنع دخول الرجال"
+                                },
+                                {
+                                    "id": "1.3.2",
+                                    "text": "عدم لصق صور أو إعلانات مخلة بالآداب داخل المحل أو خارجه"
+                                },
+                                {
+                                    "id": "1.3.3",
+                                    "text": "وضع لوحات (ممنوع التدخين) في مواضع مختلفة من المحل بخط واضح"
+                                },
+                                {
+                                    "id": "1.3.4",
+                                    "text": "عدم وضع كاميرات بغرض المراقبة أو التسجيل أو التصوير داخل المحل"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "اشتراطات العاملين",
+                    "subcategories": [
+                        {
+                            "title": "الصحة والنظافة",
+                            "items": [
+                                {
+                                    "id": "2.1.1",
+                                    "text": "خلو العاملين من الأمراض المعدية والجلدية"
+                                },
+                                {
+                                    "id": "2.1.2",
+                                    "text": "ارتداء العاملين زي موحد نظيف"
+                                },
+                                {
+                                    "id": "2.1.3",
+                                    "text": "التزام العاملين بالنظافة الشخصية"
+                                },
+                                {
+                                    "id": "2.1.4",
+                                    "text": "عدم ارتداء الحلي والمجوهرات أثناء العمل"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "التراخيص والشهادات",
+                            "items": [
+                                {
+                                    "id": "2.2.1",
+                                    "text": "وجود شهادات صحية سارية المفعول للعاملين"
+                                },
+                                {
+                                    "id": "2.2.2",
+                                    "text": "وجود شهادات مهنية معتمدة للعاملين"
+                                },
+                                {
+                                    "id": "2.2.3",
+                                    "text": "وجود تصاريح عمل سارية المفعول للعاملين"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "اشتراطات الأدوات والمعدات",
+                    "subcategories": [
+                        {
+                            "title": "التعقيم والنظافة",
+                            "items": [
+                                {
+                                    "id": "3.1.1",
+                                    "text": "توفر جهاز تعقيم (أوتوكلاف) للأدوات المعدنية"
+                                },
+                                {
+                                    "id": "3.1.2",
+                                    "text": "توفر محلول مطهر لتنظيف الأدوات قبل التعقيم"
+                                },
+                                {
+                                    "id": "3.1.3",
+                                    "text": "توفر أوعية محكمة الغلق لحفظ الأدوات المعقمة"
+                                },
+                                {
+                                    "id": "3.1.4",
+                                    "text": "استخدام أدوات نظيفة ومعقمة لكل زبونة"
+                                },
+                                {
+                                    "id": "3.1.5",
+                                    "text": "استخدام فوط وأغطية نظيفة لكل زبونة"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "الأدوات ذات الاستخدام الواحد",
+                            "items": [
+                                {
+                                    "id": "3.2.1",
+                                    "text": "استخدام شفرات حلاقة جديدة لكل زبونة"
+                                },
+                                {
+                                    "id": "3.2.2",
+                                    "text": "التخلص من الشفرات المستعملة في حاويات خاصة"
+                                },
+                                {
+                                    "id": "3.2.3",
+                                    "text": "استخدام قطن وإسفنج جديد لكل زبونة"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "الأجهزة والمعدات",
+                            "items": [
+                                {
+                                    "id": "3.3.1",
+                                    "text": "صيانة الأجهزة الكهربائية بشكل دوري"
+                                },
+                                {
+                                    "id": "3.3.2",
+                                    "text": "توفر أجهزة تكييف مناسبة وبحالة جيدة"
+                                },
+                                {
+                                    "id": "3.3.3",
+                                    "text": "توفر مغاسل كافية مزودة بالماء الساخن والبارد"
+                                },
+                                {
+                                    "id": "3.3.4",
+                                    "text": "توفر مراوح شفط هواء كافية وفعالة"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "اشتراطات المواد المستخدمة",
+                    "subcategories": [
+                        {
+                            "title": "مستحضرات التجميل",
+                            "items": [
+                                {
+                                    "id": "4.1.1",
+                                    "text": "استخدام مستحضرات تجميل مصرح بها من الجهات المختصة"
+                                },
+                                {
+                                    "id": "4.1.2",
+                                    "text": "عدم استخدام مستحضرات منتهية الصلاحية"
+                                },
+                                {
+                                    "id": "4.1.3",
+                                    "text": "حفظ المستحضرات في أماكن مناسبة بعيداً عن الحرارة والرطوبة"
+                                },
+                                {
+                                    "id": "4.1.4",
+                                    "text": "وضع ملصقات تعريفية على العبوات المعاد تعبئتها"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "مواد الصبغة والتفتيح",
+                            "items": [
+                                {
+                                    "id": "4.2.1",
+                                    "text": "استخدام صبغات شعر مصرح بها من الجهات المختصة"
+                                },
+                                {
+                                    "id": "4.2.2",
+                                    "text": "إجراء اختبار الحساسية قبل استخدام الصبغات"
+                                },
+                                {
+                                    "id": "4.2.3",
+                                    "text": "عدم استخدام مواد الصبغة والتفتيح منتهية الصلاحية"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "المواد الكيميائية",
+                            "items": [
+                                {
+                                    "id": "4.3.1",
+                                    "text": "تخزين المواد الكيميائية في أماكن آمنة ومنفصلة"
+                                },
+                                {
+                                    "id": "4.3.2",
+                                    "text": "وجود بطاقات تعريفية على عبوات المواد الكيميائية"
+                                },
+                                {
+                                    "id": "4.3.3",
+                                    "text": "عدم استخدام مواد كيميائية محظورة"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "اشتراطات الخدمات المقدمة",
+                    "subcategories": [
+                        {
+                            "title": "خدمات الشعر",
+                            "items": [
+                                {
+                                    "id": "5.1.1",
+                                    "text": "استخدام أدوات نظيفة ومعقمة لقص وتصفيف الشعر"
+                                },
+                                {
+                                    "id": "5.1.2",
+                                    "text": "تنظيف فرش الشعر وأمشاط التصفيف بعد كل استخدام"
+                                },
+                                {
+                                    "id": "5.1.3",
+                                    "text": "استخدام فوط نظيفة لكل زبونة"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "خدمات البشرة",
+                            "items": [
+                                {
+                                    "id": "5.2.1",
+                                    "text": "تنظيف وتعقيم أدوات العناية بالبشرة قبل الاستخدام"
+                                },
+                                {
+                                    "id": "5.2.2",
+                                    "text": "استخدام قفازات طبية عند تقديم خدمات البشرة"
+                                },
+                                {
+                                    "id": "5.2.3",
+                                    "text": "استخدام إسفنج وفرش مكياج نظيفة لكل زبونة"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "خدمات الأظافر",
+                            "items": [
+                                {
+                                    "id": "5.3.1",
+                                    "text": "تعقيم أدوات العناية بالأظافر قبل الاستخدام"
+                                },
+                                {
+                                    "id": "5.3.2",
+                                    "text": "استخدام مبارد وملمعات أظافر جديدة أو معقمة لكل زبونة"
+                                },
+                                {
+                                    "id": "5.3.3",
+                                    "text": "تنظيف أحواض غسل القدمين وتعقيمها بعد كل استخدام"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "خدمات إزالة الشعر",
+                            "items": [
+                                {
+                                    "id": "5.4.1",
+                                    "text": "استخدام شمع جديد لكل زبونة"
+                                },
+                                {
+                                    "id": "5.4.2",
+                                    "text": "استخدام أدوات نظيفة ومعقمة لإزالة الشعر"
+                                },
+                                {
+                                    "id": "5.4.3",
+                                    "text": "التخلص من الشمع المستعمل بطريقة صحية"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "اشتراطات السجلات والوثائق",
+                    "subcategories": [
+                        {
+                            "title": "التراخيص",
+                            "items": [
+                                {
+                                    "id": "6.1.1",
+                                    "text": "وجود ترخيص ساري المفعول للمحل"
+                                },
+                                {
+                                    "id": "6.1.2",
+                                    "text": "وضع الترخيص في مكان بارز"
+                                },
+                                {
+                                    "id": "6.1.3",
+                                    "text": "مطابقة النشاط الفعلي للنشاط المرخص"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "سجلات العاملين",
+                            "items": [
+                                {
+                                    "id": "6.2.1",
+                                    "text": "وجود ملف لكل عامل يحتوي على المستندات الرسمية"
+                                },
+                                {
+                                    "id": "6.2.2",
+                                    "text": "وجود سجل للفحوصات الطبية الدورية للعاملين"
+                                },
+                                {
+                                    "id": "6.2.3",
+                                    "text": "وجود سجل لحضور وانصراف العاملين"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "سجلات الصيانة والتعقيم",
+                            "items": [
+                                {
+                                    "id": "6.3.1",
+                                    "text": "وجود سجل لصيانة الأجهزة والمعدات"
+                                },
+                                {
+                                    "id": "6.3.2",
+                                    "text": "وجود سجل لتعقيم الأدوات والمعدات"
+                                },
+                                {
+                                    "id": "6.3.3",
+                                    "text": "وجود سجل للتنظيف اليومي للمحل"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+    </script>
+    
+    <script src="js/app.js"></script>
+</body>
+</html>
